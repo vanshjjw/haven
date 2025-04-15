@@ -1,19 +1,23 @@
 from pydantic import BaseModel, Field, HttpUrl
 from typing import Optional
 
-# Base properties of a book
+# Base properties of a book, aligned with models.py
 class BookBase(BaseModel):
-    external_id: str = Field(..., index=True)
-    title: str = Field(..., max_length=255)
-    authors: Optional[str] = Field(None, max_length=255) # Keeping as string for now
-    thumbnail_url: Optional[HttpUrl] = None
+    # external_id removed, isbn is now the potential external identifier
+    title: str = Field(..., max_length=200)
+    author: Optional[str] = Field(None, max_length=150)
+    isbn: Optional[str] = Field(None, max_length=20)
+    # Renamed thumbnail_url to image_url to match model
+    image_url: Optional[HttpUrl] = None 
+    public_rating: Optional[float] = None
 
-# Properties to receive via API on creation (usually from external API search)
-# We might not create books directly via API, but find/add them to library
+# Properties to receive via API on creation (e.g., when adding a book discovered via external API)
 class BookCreate(BookBase):
-    pass
+    # ISBN might be required if it's the primary key for finding existing books
+    isbn: str = Field(..., max_length=20) 
+    title: str = Field(..., max_length=200) # Title also required
 
-# Properties to receive via API on update (unlikely to update book details)
+# Properties to receive via API on update (unlikely to update book details?)
 class BookUpdate(BaseModel):
     pass # Perhaps internal flags?
 
@@ -26,7 +30,7 @@ class BookInDBBase(BookBase):
 
 # Properties to return to client
 class BookPublic(BookInDBBase):
-    pass
+    pass # Includes id, title, author, isbn, image_url, public_rating
 
 # Additional properties stored in DB
 class BookInDB(BookInDBBase):

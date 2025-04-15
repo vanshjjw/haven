@@ -1,9 +1,5 @@
-import os # Keep os for potential future use
 from flask import Flask
 from flask_migrate import Migrate
-# Removed dotenv import, handled by pydantic-settings
-
-# Import settings from config.py
 from config import settings
 
 # Import db instance from models.py
@@ -18,10 +14,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = settings.SECRET_KEY
 
-    # Initialize extensions with the app context
     db.init_app(app)
-    # Removed ma.init_app(app)
-    migrate = Migrate(app, db) # Initialize Flask-Migrate
+    migrate = Migrate(app, db) 
 
     # --- Register Blueprints --- 
     # We will add these later when creating routes
@@ -37,10 +31,13 @@ def create_app():
 
     return app
 
-# Create the app instance using the factory
+
+
+
+
+
+
 app = create_app()
 
 if __name__ == '__main__':
-    # Use Flask's built-in server for development
-    # In production, use a WSGI server like Gunicorn or uWSGI
-    app.run(debug=True) # debug=True enables auto-reloading and debugging 
+    app.run(debug=True) 
