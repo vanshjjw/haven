@@ -1,3 +1,10 @@
+# Flask environment variables
+
+# Tells Flask where to find the application object (the 'app' instance in run.py)
 FLASK_APP=run.py
-FLASK_ENV=development # Use "production" in production
-# Add other environment variables like DATABASE_URL, SECRET_KEY, JWT_SECRET_KEY here or in a .env file 
+
+# Sets the environment to development mode (enables debugger, auto-reload)
+FLASK_ENV=development
+
+# You can also enable debug mode directly here if preferred
+# FLASK_DEBUG=1 
