@@ -4,9 +4,9 @@ from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token
 
 from models import db, User
-# Adjust import path based on your structure
+
 from schemas.user import UserCreate, UserPublic 
-# Simple Pydantic model for login input
+
 from pydantic import BaseModel, EmailStr
 
 class UserLogin(BaseModel):
@@ -23,7 +23,6 @@ def register_user():
         return jsonify({"message": "No input data provided"}), 400
 
     try:
-        # Validate input data using the Pydantic schema
         user_data = UserCreate(**json_data)
     except ValidationError as e:
         return jsonify({"message": "Validation Error", "errors": e.errors()}), 400
@@ -53,11 +52,11 @@ def register_user():
         # Log the exception e
         return jsonify({"message": "Could not create user"}), 500
 
-    # Return created user details (excluding password hash)
-    # Create a UserPublic schema instance from the new_user model instance
     user_public_data = UserPublic.model_validate(new_user)
     
     return jsonify(user_public_data.model_dump()), 201 # 201 Created
+
+
 
 @auth_bp.route('/login', methods=['POST'])
 def login_user():
@@ -73,10 +72,9 @@ def login_user():
     # Find user by email
     user = User.query.filter_by(email=login_data.email).first()
 
-    # Check if user exists and password is correct
     if user and user.check_password(login_data.password):
         # Create JWT access token
         access_token = create_access_token(identity=user.id) # Use user ID as identity
         return jsonify(access_token=access_token), 200
     else:
-        return jsonify({"message": "Invalid credentials"}), 401 # 401 Unauthorized 
+        return jsonify({"message": "Invalid credentials"}), 401 # 401 Unauthorized

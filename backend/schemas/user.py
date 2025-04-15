@@ -17,3 +17,9 @@ class UserInDBBase(BaseModel):
 
     class Config:
         from_attributes = True 
+
+class UserPublic(UserInDBBase):
+    pass
+
+class UserInDB(UserInDBBase):
+    pass 

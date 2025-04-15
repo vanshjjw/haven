@@ -2,6 +2,8 @@
 .env
 .flaskenv
 
+migrations/
+
 *.pyc
 __pycache__/
 
