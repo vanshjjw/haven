@@ -8,12 +8,16 @@ import * as authService from '../../services/authService';
 import styles from './LandingPage.module.css'; 
 // Helper function remains the same (assuming classnames is installed)
 import cn from 'classnames';
+import { useAuth } from '../../context/AuthContext'; // Import useAuth
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
 type AuthMode = 'login' | 'signup' | null;
 
 const LandingPage: React.FC = () => {
   const [authMode, setAuthMode] = useState<AuthMode>(null); 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { login } = useAuth(); // Get login function from context
+  const navigate = useNavigate(); // Hook for programmatic navigation
 
   // --- Handlers for Login --- 
   const handleLoginSubmit = async (email: string, password: string) => {
@@ -21,9 +25,9 @@ const LandingPage: React.FC = () => {
     try {
       const data = await authService.login({ email, password });
       console.log('Login successful:', data);
-      localStorage.setItem('authToken', data.access_token);
-      setAuthMode(null); 
-      // TODO: Add proper state update/redirect for logged-in state
+      login(data.access_token); // Update context state (which handles localStorage)
+      setAuthMode(null); // Close the form
+      navigate('/home'); // Redirect to home page
     } catch (error) {
       console.error('Login failed:', error);
       setErrorMessage(error instanceof Error ? error.message : 'An unknown error occurred');
@@ -37,6 +41,8 @@ const LandingPage: React.FC = () => {
       const data = await authService.register({ username, email, password });
       console.log('Registration successful:', data);
       setAuthMode('login'); 
+      // Optionally set a success message here to display on the login form
+      setErrorMessage('Registration successful! Please log in.'); 
     } catch (error) {
       console.error('Registration failed:', error);
       setErrorMessage(error instanceof Error ? error.message : 'An unknown error occurred');
@@ -48,6 +54,7 @@ const LandingPage: React.FC = () => {
     setErrorMessage(null); 
   };
 
+  // Note: The redirection if already logged in is handled in App.tsx
   return (
     <div className={styles.pageContainer}>
       <div className={styles.card}>

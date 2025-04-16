@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from config import settings
 
 # Import db instance from models.py
@@ -12,6 +13,10 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
+
+    # Initialize CORS **before** registering routes/blueprints
+    # Allow requests from your frontend origin (adjust port if necessary)
+    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
     # Configure the application using settings from config.py
     app.config['SQLALCHEMY_DATABASE_URI'] = settings.DATABASE_URL
