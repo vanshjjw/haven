@@ -85,17 +85,15 @@ const BookDetailModal: React.FC<BookDetailModalProps> = ({ book, onClose }) => {
     setSaveSuccess(false);
 
     try {
-      console.log('Calling addOrUpdateLibraryEntry within BookDetailModal.tsx');
-      const result = await addOrUpdateLibraryEntry(book, selectedStatus, finalRating, token);
-      console.log('Save successful:', result);
-      setSaveSuccess(true);
+        const result = await addOrUpdateLibraryEntry(book, selectedStatus, finalRating, token);
+        setSaveSuccess(true);
     } 
     catch (error: any) {
-      console.error("Save failed:", error);
-      setSaveError(error.message || 'Failed to save book to library.');
+        console.error("Save failed:", error);
+        setSaveError(error.message || 'Failed to save book to library.');
     } 
     finally {
-      setIsSaving(false);
+        setIsSaving(false);
     }
   };
  

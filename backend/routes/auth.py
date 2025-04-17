@@ -73,14 +73,7 @@ def login_user():
     user = User.query.filter_by(email=login_data.email).first()
 
     if user and user.check_password(login_data.password):
-        # Log the secret key used for encoding
-        encoding_key = current_app.config.get("JWT_SECRET_KEY")
-        current_app.logger.info(f"Using JWT Secret Key for encoding: {encoding_key}")
-        # Optional: Compare directly with settings if imported
-        # current_app.logger.info(f"Settings.SECRET_KEY value: {settings.SECRET_KEY}") 
-
-        # Create JWT access token
-        access_token = create_access_token(identity=user.id) 
+        access_token = create_access_token(identity=str(user.id))
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401 # 401 Unauthorized

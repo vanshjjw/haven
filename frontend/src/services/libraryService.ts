@@ -57,10 +57,6 @@ export const addOrUpdateLibraryEntry = async (
 
     const url = `${API_BASE_URL}/library/entry`;
 
-    // Problems
-    console.log('Sending library entry payload:', JSON.stringify(payload, null, 2));
-    console.log('Using Authorization Header:', `Bearer ${token}`);
-
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -79,14 +75,6 @@ export const addOrUpdateLibraryEntry = async (
         errorMessage = errorData?.message || errorData?.errors || errorMessage;
         if(errorData?.details) {
             errorDetails = errorData.details;
-
-            console.error("Pydantic Validation Details:", errorDetails);
-            try {
-                const formattedDetails = JSON.stringify(errorDetails);
-                errorMessage = `${errorData?.message || 'Validation Error'}: ${formattedDetails}`;
-            } 
-            catch (e) { 
-            }
         }
       } 
       catch (e) {
@@ -97,7 +85,6 @@ export const addOrUpdateLibraryEntry = async (
         catch (textE) {
         }
       }
-      console.error("Final error message:", errorMessage);
       throw new Error(errorMessage); 
     }
 

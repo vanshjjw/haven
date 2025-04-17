@@ -65,7 +65,6 @@ export const searchBooks = async (
       } 
       catch (error) {
           if (error instanceof Error && error.name === 'AbortError') {
-            console.log('Fetch aborted');
             return []; 
           }
           console.error("Error searching books:", error);

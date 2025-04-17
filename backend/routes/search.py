@@ -15,8 +15,6 @@ MAX_EXTERNAL_RESULTS = 20
 def search_all_books():
     query = request.args.get('query', type=str)
     # Consider adding page/limit parameters later for pagination
-    
-    current_app.logger.info(f"Accessed /library/entry endpoint for user (JWT check ACTIVE)")
 
     if not query or len(query) < 3:
         return jsonify({"message": "Query parameter is required and must be at least 3 characters long."}), 400
@@ -25,6 +23,7 @@ def search_all_books():
     external_results_formatted = []
     local_isbns = set()
 
+    # --- 1. Search Local Database ---
     try:
         search_term = f"%{query}%"
         local_books = Book.query.filter(
@@ -51,11 +50,11 @@ def search_all_books():
             })
             if book.isbn:
                 local_isbns.add(book.isbn)
-
     except Exception as e:
+        # Keep error log
         print(f"Error searching local database: {e}")
 
-
+    # --- 2. Search External API ---
     try:
         external_results_raw = search_books_external(query, MAX_EXTERNAL_RESULTS)
         if external_results_raw:
@@ -78,10 +77,11 @@ def search_all_books():
                     "public_rating": book_data.get("public_rating"),
                     "source": "external" # Mark source
                  })
-
     except Exception as e:
-        print(f"Error searching external API: {e}") 
+        # Keep error log
+        print(f"Error searching external API: {e}")
 
+    # --- 3. Combine and Return Results ---
     # Add sorting logic here
     combined_results = local_results_formatted + external_results_formatted
     
