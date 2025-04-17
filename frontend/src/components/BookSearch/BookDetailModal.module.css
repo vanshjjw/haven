@@ -7,7 +7,7 @@
 }
 
 .modalContent {
-  @apply bg-background-surface rounded-lg shadow-xl p-6 max-w-2xl w-full relative max-h-[90vh] overflow-y-auto;
+  @apply bg-background-surface rounded-lg shadow-xl p-6 max-w-3xl w-full relative max-h-[90vh] overflow-y-auto;
   /* Animation (optional) */
   /* @apply transition-all duration-300 ease-out; */
   /* Consider scale/opacity animation on open/close */
@@ -48,13 +48,58 @@
 }
 
 .actionsTitle {
-  @apply text-lg font-semibold text-foreground mb-3;
+  @apply text-lg font-semibold text-foreground mb-4;
 }
 
-.actionButton {
-  /* Use primary button style */
+/* Container for status buttons */
+.statusButtonGroup {
+  @apply flex flex-wrap gap-2 mb-4;
+}
+
+/* Individual status buttons */
+.statusButton {
+  /* Use secondary button style or similar */
+  @apply inline-flex items-center px-3 py-1.5 border border-border text-sm font-medium rounded text-foreground hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  @apply transition-colors duration-150;
+}
+
+/* Style for the selected status button */
+.statusButton.selected {
+  @apply bg-primary border-primary text-white hover:bg-primary-hover;
+  /* Add stronger visual indication */
+  @apply ring-2 ring-offset-1 ring-primary;
+}
+
+/* Container for rating input */
+.ratingInputContainer {
+  @apply mt-4 mb-4;
+}
+
+.ratingLabel {
+  @apply block text-sm font-medium text-foreground-secondary mb-1;
+}
+
+.ratingInput {
+  /* Style like other inputs */
+  @apply appearance-none rounded relative block w-24 px-3 py-2 border border-border bg-background-surface placeholder-foreground-muted text-foreground focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-sm;
+}
+
+/* Container for the final save button */
+.saveButtonContainer {
+  @apply mt-4 pt-4 border-t border-border-muted; /* Separator */
+}
+
+/* Save button - Reuse primary action button style */
+.saveButton {
   @apply inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
-  @apply mr-2 mb-2; /* Spacing for potential multiple buttons */
+  /* Disabled state */
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
-/* Add styles for other action buttons (secondary, danger) if needed */ 
+/* Feedback messages */
+.errorMessage {
+    @apply text-red-600 text-sm mt-2;
+}
+.successMessage {
+    @apply text-green-600 text-sm mt-2;
+} 

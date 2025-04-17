@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from pydantic import ValidationError
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token
@@ -8,6 +8,7 @@ from models import db, User
 from schemas.user import UserCreate, UserPublic 
 
 from pydantic import BaseModel, EmailStr
+from config import settings
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -44,17 +45,16 @@ def register_user():
     try:
         db.session.add(new_user)
         db.session.commit()
-    except IntegrityError: # Catch potential race condition
+    except IntegrityError: 
         db.session.rollback()
         return jsonify({"message": "Username or Email already exists"}), 409
     except Exception as e:
         db.session.rollback()
-        # Log the exception e
         return jsonify({"message": "Could not create user"}), 500
 
     user_public_data = UserPublic.model_validate(new_user)
     
-    return jsonify(user_public_data.model_dump()), 201 # 201 Created
+    return jsonify(user_public_data.model_dump()), 201
 
 
 
@@ -73,8 +73,14 @@ def login_user():
     user = User.query.filter_by(email=login_data.email).first()
 
     if user and user.check_password(login_data.password):
+        # Log the secret key used for encoding
+        encoding_key = current_app.config.get("JWT_SECRET_KEY")
+        current_app.logger.info(f"Using JWT Secret Key for encoding: {encoding_key}")
+        # Optional: Compare directly with settings if imported
+        # current_app.logger.info(f"Settings.SECRET_KEY value: {settings.SECRET_KEY}") 
+
         # Create JWT access token
-        access_token = create_access_token(identity=user.id) # Use user ID as identity
+        access_token = create_access_token(identity=user.id) 
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401 # 401 Unauthorized

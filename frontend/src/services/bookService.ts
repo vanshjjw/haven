@@ -13,6 +13,9 @@ export interface BookSearchResult {
   public_rating?: number | null; // Added public rating
   publisher?: string[] | null; // Added publisher (can be array)
   description?: string | null; // Added description
+  // Fields for combined search
+  source: 'local' | 'external';
+  local_book_id?: number | null;
 }
 
 /**
