@@ -1,5 +1,5 @@
 # backend/routes/search.py
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from sqlalchemy import or_ # For OR queries
 
 # Import external search service and models
@@ -15,6 +15,8 @@ MAX_EXTERNAL_RESULTS = 20
 def search_all_books():
     query = request.args.get('query', type=str)
     # Consider adding page/limit parameters later for pagination
+    
+    current_app.logger.info(f"Accessed /library/entry endpoint for user (JWT check ACTIVE)")
 
     if not query or len(query) < 3:
         return jsonify({"message": "Query parameter is required and must be at least 3 characters long."}), 400
