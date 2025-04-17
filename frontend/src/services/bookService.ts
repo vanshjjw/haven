@@ -10,6 +10,9 @@ export interface BookSearchResult {
   isbn?: string | null;
   first_publish_year?: number | null;
   cover_url?: string | null;
+  public_rating?: number | null; // Added public rating
+  publisher?: string[] | null; // Added publisher (can be array)
+  description?: string | null; // Added description
 }
 
 /**

@@ -6,17 +6,17 @@
 }
 
 .headerInnerContainer {
-  @apply container mx-auto px-4 py-3 flex justify-between items-center;
+  @apply container mx-auto px-4 py-4 flex justify-between items-center;
 }
 
 .brand {
   /* Use accent color for icon, keep text light */
-  @apply flex items-center text-xl font-bold text-brand-light;
+  @apply flex items-center text-2xl font-bold text-brand-light;
 }
 
 .brandIcon {
   /* Use accent color */
-  @apply w-6 h-6 mr-2 text-accent; 
+  @apply w-7 h-7 mr-2 text-accent;
 }
 
 .navLinks {
@@ -29,7 +29,7 @@
 }
 
 .navLink svg {
-  @apply w-5 h-5 mr-1;
+  @apply w-6 h-6 mr-1;
 }
 
 /* Style for active NavLink (using react-router-dom's default 'active' class) */
@@ -39,5 +39,5 @@
 
 .logoutButton {
   /* Style similar to secondary button but adapted for header */
-  @apply px-4 py-1.5 border border-brand-light text-brand-light rounded hover:bg-brand-light hover:text-brand-brown_dark transition-colors duration-200 text-sm;
+  @apply px-4 py-2 border border-brand-light text-brand-light rounded hover:bg-brand-light hover:text-brand-brown_dark transition-colors duration-200 text-base;
 } 

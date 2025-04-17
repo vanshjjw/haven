@@ -1,0 +1,60 @@
+/* Styles for BookDetailModal.tsx */
+
+.modalBackdrop {
+  @apply fixed inset-0 bg-black bg-opacity-60 z-40 flex justify-center items-center p-4;
+  /* Use backdrop-blur if desired and supported */
+  /* @apply backdrop-blur-sm; */
+}
+
+.modalContent {
+  @apply bg-background-surface rounded-lg shadow-xl p-6 max-w-2xl w-full relative max-h-[90vh] overflow-y-auto;
+  /* Animation (optional) */
+  /* @apply transition-all duration-300 ease-out; */
+  /* Consider scale/opacity animation on open/close */
+}
+
+.closeButton {
+  @apply absolute top-3 right-4 text-foreground-muted hover:text-foreground text-3xl leading-none font-bold cursor-pointer;
+  /* Ensure it's easily clickable */
+  @apply p-1;
+}
+
+.bookDetailsContainer {
+  @apply flex flex-col sm:flex-row items-start mb-6;
+}
+
+.modalCover {
+  @apply w-32 h-48 object-cover mr-0 sm:mr-6 mb-4 sm:mb-0 flex-shrink-0 bg-background-surface rounded shadow;
+}
+
+.modalTextDetails {
+  @apply flex-grow;
+}
+
+.modalTitle {
+  @apply font-serif font-bold text-2xl text-foreground mb-1;
+}
+
+.modalAuthors {
+  @apply text-lg text-foreground-secondary italic mb-3;
+}
+
+.modalMeta {
+  @apply text-sm text-foreground-muted mb-1;
+}
+
+.actionsContainer {
+  @apply border-t border-border-muted pt-4 mt-4;
+}
+
+.actionsTitle {
+  @apply text-lg font-semibold text-foreground mb-3;
+}
+
+.actionButton {
+  /* Use primary button style */
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  @apply mr-2 mb-2; /* Spacing for potential multiple buttons */
+}
+
+/* Add styles for other action buttons (secondary, danger) if needed */ 

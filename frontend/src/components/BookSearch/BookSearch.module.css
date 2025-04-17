@@ -1,22 +1,135 @@
 /* Styles for BookSearch.tsx */
 
 .searchContainer {
-  @apply mb-6;
+  @apply mb-6 relative; /* Added relative for dropdown positioning */
 }
 
 .searchInput {
   /* Use styles similar to other form inputs */
-  @apply appearance-none rounded relative block w-full px-4 py-3 border border-border bg-background-surface placeholder-foreground-muted text-foreground focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-lg; /* Larger text */
+  @apply appearance-none rounded relative block w-full px-5 py-4 border border-border bg-background-surface placeholder-foreground-muted text-foreground focus:outline-none focus:ring-accent focus:border-accent focus:z-10 text-lg;
 }
 
+/* Styles for the dropdown list */
 .resultsContainer {
-  @apply mt-4 max-h-96 overflow-y-auto; /* Limit height and allow scrolling */
+  @apply absolute mt-1 w-full max-h-80 overflow-y-auto bg-background-surface border border-border rounded shadow-lg z-20;
 }
 
+/* Style for items *inside* the dropdown */
+.resultsContainer .resultItemContainer {
+  @apply flex flex-row items-start p-4 border-b border-border-muted;
+  @apply bg-background-surface;
+  /* Removed hover effect, cursor default - button is target */
+}
+
+.resultsContainer .resultItemCoverContainer {
+  @apply w-16 h-24 mr-4 flex-shrink-0 relative; /* Original size */
+}
+
+.resultsContainer .resultItemCover { 
+  @apply w-full h-full object-contain;
+}
+
+.resultsContainer .resultItemCoverPlaceholder {
+  @apply hidden absolute inset-0 bg-brand-tan rounded w-full h-full;
+}
+
+.resultsContainer .resultItemDetails {
+  @apply flex flex-col justify-between flex-grow; /* Allow button at bottom */
+}
+
+.resultsContainer .resultItemTitle {
+  @apply font-serif font-bold text-lg text-foreground mb-1; /* Original size */
+}
+
+.resultsContainer .resultItemAuthors {
+  @apply text-sm text-foreground-secondary italic mb-1; /* Original size */
+}
+
+.resultsContainer .resultItemMeta {
+    @apply text-xs text-foreground-muted; /* Original size, ensure visible */
+}
+
+.resultsContainer .resultItemDescription {
+  @apply hidden; /* Keep description hidden */
+}
+
+.resultsContainer .viewDetailsButton {
+  /* Keep button visible, use style consistent with grid button */
+  @apply inline-block px-4 py-1.5 border border-border text-sm font-medium rounded text-primary hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary mt-auto;
+  /* Align button to the right */
+  @apply self-end;
+}
+
+/* --- Grid Styles --- */
+.gridResultsContainer {
+  @apply mt-6;
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8;
+}
+
+/* Style for items *inside* the grid */
+.gridResultsContainer .resultItemContainer {
+  @apply bg-background-surface rounded border border-border-muted shadow;
+  @apply flex flex-row p-6 h-full; 
+}
+
+/* Container for the image AND the placeholder div */
+.gridResultsContainer .resultItemCoverContainer {
+  @apply w-32 mr-6 flex-shrink-0 self-start relative; 
+  @apply h-48; /* Match placeholder height */
+}
+.gridResultsContainer .resultItemCover { /* Image itself */
+  @apply w-full h-full object-contain; /* Image fills container */
+}
+.gridResultsContainer .resultItemCoverPlaceholder {
+  @apply hidden absolute inset-0 bg-brand-tan rounded; 
+  @apply w-full h-full;
+}
+
+.gridResultsContainer .resultItemDetails {
+  @apply flex flex-col justify-between flex-grow;
+}
+
+.gridResultsContainer .resultItemTitle {
+  @apply font-serif font-bold text-xl text-foreground mb-1;
+}
+
+.gridResultsContainer .resultItemAuthors {
+  @apply text-base text-foreground-secondary italic mb-2;
+}
+
+.gridResultsContainer .resultItemMeta {
+  @apply text-sm text-foreground-muted mb-2;
+}
+
+.gridResultsContainer .resultItemDescription {
+  @apply text-base text-foreground mt-2 mb-3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /* Show 4 lines in grid */
+}
+
+.gridResultsContainer .viewDetailsButton {
+  @apply inline-block px-5 py-2 border border-border text-base font-medium rounded text-primary hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary mt-auto;
+  @apply self-start;
+}
+
+/* --- Shared Styles --- */
+/* Base container style - background color only? */
+.resultItemContainer {
+  @apply bg-background-surface;
+}
+
+/* Styles for status messages (apply to both dropdown and grid containers) */
 .loadingMessage,
 .errorMessage,
 .noResultsMessage {
-  @apply text-center p-4 text-foreground-secondary;
+  @apply text-center p-4 text-foreground-secondary text-lg;
 }
 
-/* Removed styles for the title list */
+/* Ensure messages span grid columns */
+.gridResultsContainer .loadingMessage,
+.gridResultsContainer .errorMessage,
+.gridResultsContainer .noResultsMessage {
+   @apply col-span-full;
+}

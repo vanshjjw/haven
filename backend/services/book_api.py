@@ -11,10 +11,12 @@ def search_books_external(query: str, limit: int = 10):
     if not query:
         return []
 
+    # Reverted: Removed specific title/author parsing
+    # Now uses the original query directly
     params = {
         "q": query,
         "limit": limit,
-        "fields": "key,title,author_name,isbn,cover_i,first_publish_year" # Request specific fields
+        "fields": "key,title,author_name,isbn,cover_i,first_publish_year,publisher,description,ratings_average" # Request specific fields
     }
     
     headers = {
@@ -42,13 +44,31 @@ def search_books_external(query: str, limit: int = 10):
             if cover_id:
                 cover_url = f"{OPEN_LIBRARY_COVER_URL}id/{cover_id}-M.jpg" # Medium size cover
 
+            # Extract rating, round if necessary
+            raw_rating = doc.get("ratings_average")
+            public_rating = round(raw_rating, 1) if isinstance(raw_rating, (int, float)) else None
+
+            # Extract description (can be string or object)
+            desc_data = doc.get("description")
+            description = None
+            if isinstance(desc_data, str):
+                description = desc_data
+            elif isinstance(desc_data, dict) and desc_data.get("type") == "/type/text":
+                description = desc_data.get("value")
+                
+            # Extract publisher (can be a list)
+            publisher = doc.get("publisher") # Returns a list
+
             formatted_results.append({
                 "external_id": doc.get("key"), # Open Library work/edition key
                 "title": doc.get("title"),
                 "authors": doc.get("author_name"), # List of authors
                 "isbn": isbn, # Use the selected ISBN
                 "first_publish_year": doc.get("first_publish_year"),
-                "cover_url": cover_url
+                "publisher": publisher, # Add publisher list
+                "description": description, # Add description
+                "cover_url": cover_url,
+                "public_rating": public_rating # Add formatted rating
             })
         
         return formatted_results
