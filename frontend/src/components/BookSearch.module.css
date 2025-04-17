@@ -1,0 +1,20 @@
+/* Styles for BookSearch.tsx */
+
+.searchContainer {
+  @apply mb-6;
+}
+
+.searchInput {
+  /* Use styles similar to other form inputs */
+  @apply appearance-none rounded relative block w-full px-4 py-3 border border-border bg-background-surface placeholder-foreground-muted text-foreground focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-lg; /* Larger text */
+}
+
+.resultsContainer {
+  @apply mt-4 max-h-96 overflow-y-auto; /* Limit height and allow scrolling */
+}
+
+.loadingMessage,
+.errorMessage,
+.noResultsMessage {
+  @apply text-center p-4 text-foreground-secondary;
+} 

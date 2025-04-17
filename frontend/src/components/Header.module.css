@@ -1,0 +1,43 @@
+/* Styles for Header.tsx */
+
+.navbar {
+  /* Use dark brown background, light text */
+  @apply bg-brand-brown_dark text-brand-light shadow-md;
+}
+
+.container {
+  @apply container mx-auto px-4 py-3 flex justify-between items-center;
+}
+
+.brand {
+  /* Use accent color for icon, keep text light */
+  @apply flex items-center text-xl font-bold text-brand-light;
+}
+
+.brandIcon {
+  /* Use accent color */
+  @apply w-6 h-6 mr-2 text-accent; 
+}
+
+.navLinks {
+  @apply flex items-center space-x-6;
+}
+
+.navLink {
+  /* Use light text, hover with accent */
+  @apply flex items-center text-brand-light hover:text-accent transition-colors duration-200;
+}
+
+.navLink svg {
+  @apply w-5 h-5 mr-1;
+}
+
+/* Style for active NavLink (using react-router-dom's default 'active' class) */
+.navLink.active {
+  @apply text-accent font-semibold;
+}
+
+.logoutButton {
+  /* Style similar to secondary button but adapted for header */
+  @apply px-4 py-1.5 border border-brand-light text-brand-light rounded hover:bg-brand-light hover:text-brand-brown_dark transition-colors duration-200 text-sm;
+} 

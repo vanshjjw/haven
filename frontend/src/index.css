@@ -2,21 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  Semantic classes using @apply have been moved 
-  to their respective component .module.css files 
-  (e.g., LandingPage.module.css, LoginForm.module.css) 
-*/
 
-/* Keep existing global styles below directives if needed */
+/* Base body styles */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  /* Use semantic color roles defined in tailwind config */
+  /* background.DEFAULT, foreground.DEFAULT */
+  @apply font-sans bg-background text-foreground;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Optional: Style headings globally to use the serif font */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

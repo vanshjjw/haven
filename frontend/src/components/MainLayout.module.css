@@ -1,0 +1,11 @@
+/* Styles for MainLayout.tsx */
+
+.layoutContainer {
+  /* Use default background for overall page */
+  @apply min-h-screen flex flex-col bg-background;
+}
+
+.contentArea {
+  /* Allow content to grow */
+  @apply flex-grow;
+} 

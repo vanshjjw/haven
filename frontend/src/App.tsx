@@ -1,38 +1,63 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Outlet
+} from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LandingPage from './pages/LandingPage/LandingPage'; 
+import LandingPage from './pages/LandingPage/LandingPage';
 import HomePage from './pages/HomePage/HomePage';
-import ProtectedRoute from './components/ProtectedRoute';
-import './App.css'; 
+import MyLibraryPage from './pages/MyLibraryPage';
+import ProfilePage from './pages/ProfilePage';
+import MainLayout from './components/MainLayout';
+import './App.css';
 
-// Component to handle conditional rendering of LandingPage or redirect
+// Wrapper for public routes (like LandingPage)
 const PublicRouteWrapper: React.FC = () => {
   const { isAuthenticated } = useAuth();
-  // If user is already authenticated, redirect from landing page to home
+  // Redirect to home if already logged in
   return isAuthenticated ? <Navigate to="/home" replace /> : <LandingPage />;
+};
+
+// Wrapper for protected routes that applies the layout *after* checking auth
+const ProtectedLayout: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    // Redirect to landing page if not authenticated
+    return <Navigate to="/" replace />;
+  }
+
+  // Render the layout, and the Outlet will render the matched child route
+  return (
+    <MainLayout>
+      <Outlet /> {/* Child routes will render here */}
+    </MainLayout>
+  );
 };
 
 function App() {
   return (
-    <AuthProvider> {/* Wrap the entire app in AuthProvider */}
+    <AuthProvider>
       <Router>
-        <div className="App">
-          <Routes>
-            {/* Public route for landing/login page */}
-            <Route path="/" element={<PublicRouteWrapper />} />
+        <Routes>
+          {/* Public Route */}
+          <Route path="/" element={<PublicRouteWrapper />} />
 
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/home" element={<HomePage />} />
-              {/* Add other protected routes here */}
-              {/* e.g., <Route path="/library" element={<LibraryPage />} /> */}
-            </Route>
+          {/* Protected Routes Parent */}
+          <Route element={<ProtectedLayout />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/library" element={<MyLibraryPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            {/* Add other protected routes here */}
+          </Route>
 
-            {/* Optional: Catch-all route for 404 Not Found */}
-            {/* <Route path="*" element={<NotFoundPage />} /> */}
-          </Routes>
-        </div>
+          {/* Optional: Catch-all route for 404 Not Found could go here */}
+          {/* <Route path="*" element={<NotFoundPage />} /> */} 
+
+        </Routes>
       </Router>
     </AuthProvider>
   );

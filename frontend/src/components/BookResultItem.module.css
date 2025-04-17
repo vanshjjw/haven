@@ -1,0 +1,39 @@
+/* Styles for BookResultItem.tsx */
+
+.container {
+  @apply flex items-start p-4 border border-border-muted rounded bg-background-surface mb-3 shadow;
+}
+
+.cover {
+  @apply w-16 h-24 object-cover mr-4 flex-shrink-0 bg-background-muted; /* Added background for placeholders */
+}
+
+.details {
+  @apply flex-grow;
+}
+
+.title {
+  /* Use serif font for titles */
+  @apply font-serif font-bold text-lg text-foreground mb-1;
+}
+
+.authors {
+  @apply text-sm text-foreground-secondary italic mb-1;
+}
+
+.meta {
+  @apply text-xs text-foreground-muted;
+}
+
+/* Separated base and hover styles for addButton */
+.addButton {
+  @apply ml-4 px-3 py-1 border border-primary text-primary rounded text-sm transition-colors duration-150;
+}
+
+.addButton:hover {
+  /* Apply standard hover background and specific text color */
+  @apply bg-primary;
+  color: theme('colors.foreground.on_primary'); /* Use theme function */
+  /* Alternatively, use the direct hex code if theme() doesn't work reliably: */
+  /* color: #FFFFFF; */
+} 

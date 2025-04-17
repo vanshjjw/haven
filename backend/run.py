@@ -32,11 +32,9 @@ def create_app():
     # --- Register Blueprints --- 
     # Import and register the auth blueprint
     from routes.auth import auth_bp 
+    from routes.library import library_bp # Import library blueprint
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    
-    # Placeholder for library blueprint registration
-    # from routes.library import library_bp
-    # app.register_blueprint(library_bp, url_prefix='/api')
+    app.register_blueprint(library_bp, url_prefix='/api') # Register library blueprint
 
     # A simple route for testing
     @app.route('/')
