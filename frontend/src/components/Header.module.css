@@ -5,7 +5,7 @@
   @apply bg-brand-brown_dark text-brand-light shadow-md;
 }
 
-.container {
+.headerInnerContainer {
   @apply container mx-auto px-4 py-3 flex justify-between items-center;
 }
 

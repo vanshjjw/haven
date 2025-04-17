@@ -14,7 +14,7 @@ const Header: React.FC = () => {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.container}>
+      <div className={styles.headerInnerContainer}>
         <NavLink to="/home" className={styles.brand}>
           <BookIcon />
           <span>StoryRoom</span> {/* Changed from Bookworm Haven */}

@@ -21,23 +21,6 @@ const PublicRouteWrapper: React.FC = () => {
   return isAuthenticated ? <Navigate to="/home" replace /> : <LandingPage />;
 };
 
-// Wrapper for protected routes that applies the layout *after* checking auth
-const ProtectedLayout: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    // Redirect to landing page if not authenticated
-    return <Navigate to="/" replace />;
-  }
-
-  // Render the layout, and the Outlet will render the matched child route
-  return (
-    <MainLayout>
-      <Outlet /> {/* Child routes will render here */}
-    </MainLayout>
-  );
-};
-
 function App() {
   return (
     <AuthProvider>
@@ -46,8 +29,9 @@ function App() {
           {/* Public Route */}
           <Route path="/" element={<PublicRouteWrapper />} />
 
-          {/* Protected Routes Parent */}
-          <Route element={<ProtectedLayout />}>
+          {/* Routes requiring authentication and the main layout */}
+          {/* The auth check is now inside HomePage, MyLibraryPage, ProfilePage */}
+          <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/library" element={<MyLibraryPage />} />
             <Route path="/profile" element={<ProfilePage />} />
