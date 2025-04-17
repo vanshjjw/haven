@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import * as bookService from '../services/bookService';
+import React, { useState, useEffect, useRef } from 'react';
+import * as bookService from '../../services/bookService';
 import BookResultItem from './BookResultItem';
 import styles from './BookSearch.module.css';
 
@@ -78,13 +78,6 @@ const BookSearch: React.FC = () => {
     };
   }, [debouncedQuery]); // Re-run effect only when debouncedQuery changes
 
-  // Handler for adding book (placeholder for now)
-  const handleAddBook = useCallback((book: bookService.BookSearchResult) => {
-    console.log('Add book:', book); // Replace with actual API call later
-    // TODO: Implement call to backend service to add book to user library
-    // Show feedback to user (e.g., toast notification)
-  }, []);
-
   return (
     <div className={styles.searchContainer}>
       <input
@@ -102,12 +95,11 @@ const BookSearch: React.FC = () => {
           <p className={styles.noResultsMessage}>No books found for "{debouncedQuery}".</p>
         )}
         {!isLoading && !error && results.length > 0 && (
-          <div>
+          <div> 
             {results.map((book) => (
               <BookResultItem 
-                key={book.external_id || book.isbn || book.title} // Use a stable key
-                book={book} 
-                onAdd={handleAddBook}
+                key={book.external_id || book.isbn || book.title} 
+                book={book}
               />
             ))}
           </div>

@@ -8,6 +8,13 @@
   @apply w-16 h-24 object-cover mr-4 flex-shrink-0 bg-background-muted; /* Added background for placeholders */
 }
 
+/* Placeholder for missing cover */
+.coverPlaceholder {
+  @apply w-16 h-24 mr-4 flex-shrink-0 bg-background-muted; /* Same dimensions and background as .cover */
+  /* Optionally add border or icon */
+  /* @apply border border-border-muted flex items-center justify-center; */
+}
+
 .details {
   @apply flex-grow;
 }
@@ -25,15 +32,4 @@
   @apply text-xs text-foreground-muted;
 }
 
-/* Separated base and hover styles for addButton */
-.addButton {
-  @apply ml-4 px-3 py-1 border border-primary text-primary rounded text-sm transition-colors duration-150;
-}
-
-.addButton:hover {
-  /* Apply standard hover background and specific text color */
-  @apply bg-primary;
-  color: theme('colors.foreground.on_primary'); /* Use theme function */
-  /* Alternatively, use the direct hex code if theme() doesn't work reliably: */
-  /* color: #FFFFFF; */
-} 
+/* Removed .addButton and .addButton:hover styles */ 

@@ -17,4 +17,6 @@
 .errorMessage,
 .noResultsMessage {
   @apply text-center p-4 text-foreground-secondary;
-} 
+}
+
+/* Removed styles for the title list */

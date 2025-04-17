@@ -10,7 +10,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage/LandingPage';
 import HomePage from './pages/HomePage/HomePage';
 import MyLibraryPage from './pages/MyLibraryPage';
-import ProfilePage from './pages/ProfilePage';
+// import ProfilePage from './pages/ProfilePage';
 import MainLayout from './components/MainLayout';
 import './App.css';
 
@@ -29,12 +29,11 @@ function App() {
           {/* Public Route */}
           <Route path="/" element={<PublicRouteWrapper />} />
 
-          {/* Routes requiring authentication and the main layout */}
-          {/* The auth check is now inside HomePage, MyLibraryPage, ProfilePage */}
+          {/* The auth check is inside HomePage, MyLibraryPage, ProfilePage */}
           <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/library" element={<MyLibraryPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            {/* <Route path="/profile" element={<ProfilePage />} /> */}
             {/* Add other protected routes here */}
           </Route>
 

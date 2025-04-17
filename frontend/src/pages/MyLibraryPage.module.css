@@ -1,0 +1,16 @@
+/* Styles for MyLibraryPage.tsx */
+
+.pageContainer {
+  /* Assuming global container styles handle mx-auto, apply padding */
+  @apply container mx-auto p-8;
+}
+
+.title {
+  /* Assuming primary is defined globally */
+  @apply text-3xl font-bold text-primary mb-4;
+}
+
+.placeholderText {
+  /* Assuming foreground-secondary is defined globally */
+  @apply text-foreground-secondary;
+} 

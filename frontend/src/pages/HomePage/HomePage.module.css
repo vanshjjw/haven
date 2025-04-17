@@ -1,0 +1,6 @@
+/* Styles for HomePage.tsx */
+
+.pageContainer {
+  /* Similar to MyLibraryPage for consistency */
+  @apply container mx-auto p-8;
+}

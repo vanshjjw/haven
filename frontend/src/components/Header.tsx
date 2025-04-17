@@ -34,13 +34,6 @@ const Header: React.FC = () => {
             <LibraryIcon />
             <span>My Library</span>
           </NavLink>
-          <NavLink 
-            to="/profile" 
-            className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
-          >
-            <ProfileIcon />
-            <span>Profile</span>
-          </NavLink>
           <button onClick={logout} className={styles.logoutButton}>
             Log out
           </button>

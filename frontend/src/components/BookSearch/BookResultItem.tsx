@@ -1,14 +1,13 @@
 import React from 'react';
-import { BookSearchResult } from '../services/bookService'; // Import the interface
+import { BookSearchResult } from '../../services/bookService'; // Import the interface
 import styles from './BookResultItem.module.css';
 
 // Define the props for the component
 interface BookResultItemProps {
   book: BookSearchResult;
-  onAdd: (book: BookSearchResult) => void; // Function to call when adding the book
 }
 
-const BookResultItem: React.FC<BookResultItemProps> = ({ book, onAdd }) => {
+const BookResultItem: React.FC<BookResultItemProps> = ({ book }) => {
   const { title, authors, cover_url, first_publish_year, isbn } = book;
 
   // Placeholder image if cover URL is missing
@@ -31,12 +30,6 @@ const BookResultItem: React.FC<BookResultItemProps> = ({ book, onAdd }) => {
           {isbn && <span> | ISBN: {isbn}</span>}
         </p>
       </div>
-      <button 
-        onClick={() => onAdd(book)}
-        className={styles.addButton}
-      >
-        Add
-      </button>
     </div>
   );
 };
