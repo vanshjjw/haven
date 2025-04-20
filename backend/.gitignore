@@ -1,6 +1,6 @@
 .venv/
 .flaskenv
-
+.env
 migrations/
 
 *.pyc
@@ -15,6 +15,3 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-
-.env
-.flaskenv
