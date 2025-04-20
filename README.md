@@ -1,7 +1,7 @@
 # Haven - 
 
 Haven is a full-stack web application designed to serve as a cozy digital library. Imagine Notion meets Goodreads and Letterboxd, but away from all the junk that makes it feel like a social media abyss. 
-I want a simple and intuitive interface for users to track and engage with creative media (movies, books, etc.), share theri favourites, and write down theri thoughts. I want this to feel like a personal space, but a clogged social media drain.
+I want a simple and intuitive interface for users to track and engage with creative media (movies, books, etc.), share their favourites, and write down their thoughts. I want this to feel like a personal space, not a clogged social media drain.
 
 
 
