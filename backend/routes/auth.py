@@ -14,7 +14,7 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
-# Create a Blueprint for authentication routes
+
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/register', methods=['POST'])
@@ -28,14 +28,12 @@ def register_user():
     except ValidationError as e:
         return jsonify({"message": "Validation Error", "errors": e.errors()}), 400
 
-    # Check if user already exists
     existing_user = User.query.filter(
         (User.username == user_data.username) | (User.email == user_data.email)
     ).first()
     if existing_user:
         return jsonify({"message": "Username or Email already exists"}), 409 # 409 Conflict
 
-    # Create new user instance
     new_user = User(
         username=user_data.username,
         email=user_data.email

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as bookService from '../../services/bookService';
-import { BookSearchResult } from '../../services/bookService';
+import * as bookService from '../../services/SearchService';
+import { BookSearchResult } from '../../services/SearchService';
 import styles from './BookSearch.module.css';
 import BookDetailModal from './BookDetailModal';
 
@@ -21,17 +21,14 @@ const BookSearch: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<bookService.BookSearchResult | null>(null);
 
-  // --- NEW: State for Grid Search (triggered by Enter) ---
   const [isGridSearchActive, setIsGridSearchActive] = useState(false);
   const [gridResults, setGridResults] = useState<bookService.BookSearchResult[]>([]);
   const [isGridLoading, setIsGridLoading] = useState(false);
   const [gridError, setGridError] = useState<string | null>(null);
   const gridAbortControllerRef = useRef<AbortController | null>(null);
-  // Store the query used for the grid search
-  const [gridQuery, setGridQuery] = useState<string>(''); 
-  // --- END: New State ---
 
-  // Debounce effect
+  const [gridQuery, setGridQuery] = useState<string>(''); 
+
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedQuery(query);
@@ -42,9 +39,7 @@ const BookSearch: React.FC = () => {
     };
   }, [query]);
 
-  // API call effect based on debounced query
   useEffect(() => {
-    // Abort previous request if it's still running
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -53,10 +48,9 @@ const BookSearch: React.FC = () => {
       setResults([]);
       setError(null);
       setIsLoading(false);
-      return; // Exit if query is too short
+      return;
     }
 
-    // Create a new AbortController for the new request
     const controller = new AbortController();
     abortControllerRef.current = controller;
 

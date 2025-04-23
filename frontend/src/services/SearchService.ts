@@ -1,8 +1,8 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
-// Interface matching the expected structure from the backend search route
+
 export interface BookSearchResult {
-  external_id: string; // Open Library Key
+  external_id: string;
   title: string;
   authors?: string[]; // Open Library returns an array
   isbn?: string | null;
@@ -15,13 +15,12 @@ export interface BookSearchResult {
   local_book_id?: number | null;
 }
 
-/**
- * Searches for books by calling the backend API.
- * @param query The search term.
- * @param limit Max number of results.
- * @param signal AbortSignal for request cancellation.
- * @returns Promise<BookSearchResult[]>
- */
+
+//  * Searches for books by calling the backend API.
+//  * @param query The search term.
+//  * @param limit Max number of results.
+//  * @param signal AbortSignal for request cancellation.
+//  * @returns Promise<BookSearchResult[]>
 
 export const searchBooks = async (
   query: string, 

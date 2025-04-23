@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './BookDetailModal.module.css';
 
 type LibraryStatus = 0 | 1 | 2 | null; // 0: Want to Read, 1: Reading, 2: Read
-import { BookSearchResult } from '../../services/bookService'; 
+import { BookSearchResult } from '../../services/SearchService';
 import { addOrUpdateLibraryEntry } from '../../services/libraryService'; 
 import { useAuth } from '../../context/AuthContext'; 
 

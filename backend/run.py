@@ -25,8 +25,6 @@ dictConfig({
 })
 
 jwt = JWTManager()
-
-# Get the logger instance directly
 log = logging.getLogger(__name__)
 
 def create_app():
@@ -51,15 +49,15 @@ def create_app():
 
     jwt.init_app(app)
     db.init_app(app)
-    migrate = Migrate(app, db) 
+    Migrate(app, db)
 
     from routes.auth import auth_bp 
     from routes.search import search_bp 
-    from routes.library_entries import library_entries_bp 
+    from routes.library import library_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(search_bp, url_prefix='/api/search')
-    app.register_blueprint(library_entries_bp, url_prefix='/api/library')
+    app.register_blueprint(library_bp, url_prefix='/api/library')
 
     @app.route('/')
     def hello():
@@ -68,12 +66,6 @@ def create_app():
 
     app.logger.info("Flask App Created and Configured")
     return app
-
-
-
-
-
-
 
 app = create_app()
 

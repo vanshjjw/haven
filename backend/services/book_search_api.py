@@ -2,30 +2,27 @@ import requests
 import logging
 
 OPEN_LIBRARY_SEARCH_URL = "https://openlibrary.org/search.json"
-OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/" # ID type (isbn, oclc, etc.) / ID / Size (S, M, L).jpg
+OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/"
 
 logger = logging.getLogger(__name__)
 
 def search_books_external(query: str, limit: int = 10):
-    """Searches for books using the Open Library Search API."""
     if not query:
         return []
 
-    # Reverted: Removed specific title/author parsing
-    # Now uses the original query directly
     params = {
         "q": query,
         "limit": limit,
-        "fields": "key,title,author_name,isbn,cover_i,first_publish_year,publisher,description,ratings_average" # Request specific fields
+        "fields": "key,title,author_name,isbn,cover_i,first_publish_year,publisher,description,ratings_average"
     }
     
     headers = {
-        "User-Agent": "StoryRoomApp/1.0 (Contact: your-email@example.com)" # Be polite to APIs
+        "User-Agent": "StoryRoomApp/1.0 (Contact: your-email@example.com)"
     }
 
     try:
-        response = requests.get(OPEN_LIBRARY_SEARCH_URL, params=params, headers=headers, timeout=10) # Add timeout
-        response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+        response = requests.get(OPEN_LIBRARY_SEARCH_URL, params=params, headers=headers, timeout=10)
+        response.raise_for_status()
         data = response.json()
 
         # Format the results
@@ -36,7 +33,7 @@ def search_books_external(query: str, limit: int = 10):
             isbn_list = doc.get("isbn", [])
             if isbn_list:
                 isbn13 = next((i for i in isbn_list if len(i) == 13), None)
-                isbn = isbn13 or isbn_list[0] # Fallback to first ISBN if no 13-digit found
+                isbn = isbn13 or isbn_list[0]
             
             # Construct cover URL if cover ID exists
             cover_url = None
@@ -57,7 +54,7 @@ def search_books_external(query: str, limit: int = 10):
                 description = desc_data.get("value")
                 
             # Extract publisher (can be a list)
-            publisher = doc.get("publisher") # Returns a list
+            publisher = doc.get("publisher")
 
             formatted_results.append({
                 "external_id": doc.get("key"), # Open Library work/edition key
@@ -68,13 +65,11 @@ def search_books_external(query: str, limit: int = 10):
                 "publisher": publisher, # Add publisher list
                 "description": description, # Add description
                 "cover_url": cover_url,
-                "public_rating": public_rating # Add formatted rating
+                "public_rating": public_rating
             })
         
         return formatted_results
 
     except requests.exceptions.RequestException as e:
         logger.error(f"Error calling Open Library API: {e}")
-        # Depending on requirements, you might want to raise an exception 
-        # or return an empty list/error indicator
-        return None # Indicate an error occurred 
+        return None

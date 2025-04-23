@@ -8,7 +8,7 @@ import {
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage/LandingPage';
 import HomePage from './pages/HomePage/HomePage';
-import MyLibraryPage from './pages/MyLibraryPage';
+import MyLibraryPage from './pages/LibraryPage/MyLibraryPage';
 // import ProfilePage from './pages/ProfilePage';
 import MainLayout from './components/MainLayout';
 import './App.css';

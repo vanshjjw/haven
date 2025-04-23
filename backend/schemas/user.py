@@ -16,6 +16,8 @@ class UserInDBBase(BaseModel):
     email: EmailStr
 
     class Config:
+        def __init__(self):
+            pass
         from_attributes = True 
 
 class UserPublic(UserInDBBase):

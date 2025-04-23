@@ -1,8 +1,8 @@
-import { BookSearchResult } from './bookService';
+import { BookSearchResult } from './SearchService';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
-// Interface for the data sent to the backend
+
 interface LibraryEntryPayload {
   source: 'local' | 'external'; 
   local_book_id?: number | null; 
@@ -18,14 +18,13 @@ interface LibraryEntryPayload {
   rating?: number | null;
 }
 
-/**
- * Adds or updates a book entry in the user's library.
- * @param book The book details from search results.
- * @param status The selected library status (0, 1, or 2).
- * @param rating The user's rating (optional, 1-5, null if not applicable).
- * @param token The JWT authentication token.
- * @returns Promise<any> The response data from the backend.
- */
+
+//  * Adds or updates a book entry in the user's library.
+//  * @param book The book details from search results.
+//  * @param status The selected library status (0, 1, or 2).
+//  * @param rating The user's rating (optional, 1-5, null if not applicable).
+//  * @param token The JWT authentication token.
+//  * @returns Promise<any> The response data from the backend.
 
 
 export const addOrUpdateLibraryEntry = async (
@@ -55,7 +54,7 @@ export const addOrUpdateLibraryEntry = async (
       };
     }
 
-    const url = `${API_BASE_URL}/library/entry`;
+    const url = `${API_BASE_URL}/library/add`;
 
     const response = await fetch(url, {
       method: 'POST',
@@ -75,6 +74,7 @@ export const addOrUpdateLibraryEntry = async (
         errorMessage = errorData?.message || errorData?.errors || errorMessage;
         if(errorData?.details) {
             errorDetails = errorData.details;
+            console.error("Error details:", errorDetails);
         }
       } 
       catch (e) {
